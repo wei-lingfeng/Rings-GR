@@ -44,8 +44,6 @@ compute_XYZVW(const double m1, const double tV, const double k, const double Roa
   double mu = m1*m2/(m1+m2);
   
   double tF = tV/9.0*aoR8*m1*m1/(m1+m2)/m2*pow_int(1.0 + 2.0*k, -2);
- if(m1<0.1 && a<0.3 && a*(1-e)<0.03 ){
-  double tF = 1e-5*tV/9.0*aoR8*m1*m1/(m1+m2)/m2*pow_int(1.0 + 2.0*k, -2);}
 
   double Ox = dot(spin, xhat);
   double Oy = dot(spin, yhat);
@@ -67,7 +65,7 @@ tidal_rhs(const body *b, const central_body *bc, double brhs[BODY_VECTOR_SIZE], 
   
   double X1, Y1, Z1, V1, W1;
   double X2, Y2, Z2, V2, W2;
-  double epsilon_GR;
+  
   double h, adot, mu, srtma, a2, a;
 
   int i;
@@ -86,7 +84,7 @@ tidal_rhs(const body *b, const central_body *bc, double brhs[BODY_VECTOR_SIZE], 
   n = mean_motion(b);
   a = b->a;
   a2 = a*a;
-  
+
   h = norm(b->L);
 
   mu = b->m/(1.0+b->m);
@@ -102,14 +100,10 @@ tidal_rhs(const body *b, const central_body *bc, double brhs[BODY_VECTOR_SIZE], 
   adot = -2*b->a*(W1 + W2 + e*e/(1-e*e)*(V1 + V2));
   brhs[BODY_a_INDEX] = adot;
 
-//  printf("V is %15.8f\n",V1+V2);
-// for GR, the value of epsilon_GR=3*n*G*(m_0+m_i)/a*(1-e^2). For M=Msun, we get:
-  epsilon_GR=3.0*n*9.91e-9/(a*(1-e*e));
-    
   for (i = 0; i < 3; i++) {
-    brhs[BODY_A_INDEX + i] = e*((Z1 + Z2 + epsilon_GR)*yhat[i] - (Y1 + Y2)*zhat[i] - (V1 + V2)*xhat[i]);
+    brhs[BODY_A_INDEX + i] = e*((Z1 + Z2)*yhat[i] - (Y1 + Y2)*zhat[i] - (V1 + V2)*xhat[i]);
     brhs[BODY_L_INDEX + i] = h*((Y1 + Y2)*xhat[i] - (X1 + X2)*yhat[i] - (W1 + W2)*zhat[i]) - 0.5*(adot/b->a)*b->L[i];
-    brhs[BODY_SPIN_INDEX + i] = mu*h*srtma/b->I*(-Y2*xhat[i] + X2*yhat[i] + W2*zhat[i]);
-    srhs[i] = mu*h*srtma/bc->I*(-Y1*xhat[i] + X1*yhat[i] + W1*zhat[i]);
+    brhs[BODY_SPIN_INDEX + i] = mu*h*srtma/b->I*(-Y1*xhat[i] + X1*yhat[i] + W1*zhat[i]);
+    srhs[i] = mu*h*srtma/bc->I*(-Y2*xhat[i] + X2*yhat[i] + W2*zhat[i]);
   }
 }

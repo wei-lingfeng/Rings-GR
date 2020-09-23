@@ -1,5 +1,18 @@
---General Relativisitc Version--
+-- General Relativisitc Version --
 
+-- Installation --
+$ git clone https://github.com/Lingfeng-Wei/Rings-GR.git
+$ cd Rings-GR/
+$ ./configure
+$ make
+$ make install
+
+-Error: make: *** [aclocal.m4] Error 127
+-Solution: $ autoreconf -f -i
+And run ./configure && make && make install again.
+Reference: https://github.com/apereo/mod_auth_cas/issues/97
+
+-------------------------------------------------------------------
 A code to efficiently simulate the secular evolution of a system of
 bodies under the dominating gravitational influence of a massive
 central body.  The evolution includes the effects of tides between

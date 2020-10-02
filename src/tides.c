@@ -93,8 +93,21 @@ tidal_rhs(const body *b, const central_body *bc, double brhs[BODY_VECTOR_SIZE], 
 
   srtma = sqrt((1.0+b->m)*b->a);
 
-  compute_XYZVW(1.0, bc->tV, bc->k, bc->R/b->a, n, b->a, e, b->m, xhat, yhat, zhat, bc->spin, &X1, &Y1, &Z1, &V1, &W1);
-  compute_XYZVW(b->m, b->tV, b->k, b->R/b->a, n, b->a, e, 1.0, xhat, yhat, zhat, b->spin, &X2, &Y2, &Z2, &V2, &W2);
+  // compute_XYZVW(1.0, bc->tV, bc->k, bc->R/b->a, n, b->a, e, b->m, xhat, yhat, zhat, bc->spin, &X1, &Y1, &Z1, &V1, &W1);
+  // compute_XYZVW(b->m, b->tV, b->k, b->R/b->a, n, b->a, e, 1.0, xhat, yhat, zhat, b->spin, &X2, &Y2, &Z2, &V2, &W2);
+
+  // for GR, (X, Y, Z, V, W)=0
+  X1 = 0;
+  X2 = 0;
+  Y1 = 0;
+  Y2 = 0;
+  Z1 = 0;
+  Z2 = 0;
+  V1 = 0;
+  V2 = 0;
+  W1 = 0;
+  W2 = 0;
+
 
   memset(brhs, 0, BODY_VECTOR_SIZE*sizeof(double));
   memset(srhs, 0, 3*sizeof(double));
@@ -102,14 +115,14 @@ tidal_rhs(const body *b, const central_body *bc, double brhs[BODY_VECTOR_SIZE], 
   adot = -2*b->a*(W1 + W2 + e*e/(1-e*e)*(V1 + V2));
   brhs[BODY_a_INDEX] = adot;
 
-//  printf("V is %15.8f\n",V1+V2);
-// for GR, the value of epsilon_GR=3*n*G*(m_0+m_i)/a*(1-e^2). For M=Msun, we get:
+  //  printf("V is %15.8f\n",V1+V2);
+  // for GR, the value of epsilon_GR=3*n*G*(m_0+m_i)/a*(1-e^2). For M=Msun, we get:
   epsilon_GR=3.0*n*9.91e-9/(a*(1-e*e));
     
   for (i = 0; i < 3; i++) {
     brhs[BODY_A_INDEX + i] = e*((Z1 + Z2 + epsilon_GR)*yhat[i] - (Y1 + Y2)*zhat[i] - (V1 + V2)*xhat[i]);
     brhs[BODY_L_INDEX + i] = h*((Y1 + Y2)*xhat[i] - (X1 + X2)*yhat[i] - (W1 + W2)*zhat[i]) - 0.5*(adot/b->a)*b->L[i];
-    brhs[BODY_SPIN_INDEX + i] = mu*h*srtma/b->I*(-Y2*xhat[i] + X2*yhat[i] + W2*zhat[i]);
-    srhs[i] = mu*h*srtma/bc->I*(-Y1*xhat[i] + X1*yhat[i] + W1*zhat[i]);
+    brhs[BODY_SPIN_INDEX + i] = mu*h*srtma/b->I*(-Y1*xhat[i] + X1*yhat[i] + W1*zhat[i]);
+    srhs[i] = mu*h*srtma/bc->I*(-Y2*xhat[i] + X2*yhat[i] + W1*zhat[i]);
   }
 }

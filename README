@@ -7,6 +7,13 @@ $ ./configure
 $ make
 $ make install
 
+-- Running --
+/PATH_TO_Rings-GR/src/./rings --input /PATH/Input.txt --output /PATH/Output.txt --time TIME
+
+Input.txt:
+inf 0 1 0 0 0 0
+m a e i Ω ω 1 1 1 1 0 0 0
+
 -- Common Errors --
 -Error: make: *** [aclocal.m4] Error 127
 -Solution: $ autoreconf -vfi

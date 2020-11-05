@@ -29,6 +29,9 @@ Reference: https://github.com/apereo/mod_auth_cas/issues/97, https://github.com/
 -Error: Error in evolution: 9 (problem with user-supplied function) at rings.c, line 217
 -Solution: Set e=1e-4, i=1e-4 or some small number
 
+-- Unsolved Problems --
+-Nearly stops after some time. Unsolved.
+
 
 -------------------------------------------------------------------
 A code to efficiently simulate the secular evolution of a system of

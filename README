@@ -27,7 +27,7 @@ And run ./configure && make && make install again.
 Reference: https://github.com/apereo/mod_auth_cas/issues/97, https://github.com/taviso/ctypes.sh/issues/18#issuecomment-128152983
 
 -Error: Error in evolution: 9 (problem with user-supplied function) at rings.c, line 217
--Solution: Set e=1e-4, i=1e-4 or some small number
+-Solution: Set e=1e-4, i=1e-4 or some small number instead of 0.
 
 -- Unsolved Problems --
 -Nearly stops after some time. Unsolved.

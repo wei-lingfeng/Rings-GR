@@ -1,4 +1,9 @@
 --- Relativisitc Version ---
+***************************** NOTICE *******************************
+This version incorporate GR when calling /src/tides.c. So if the parameters for tidal effect is "inf 0 1 0 0 0 0" (no tides), then GR will not be called.
+When GR is needed and tidal effect is not, then follow the -- Running -- instructions.
+Otherwise, if GR & tides are both needed: Un-comment line 96-97 in /src/tides.c and comment line 100-109. Then follow the origial instructions in line 55 of this README file.
+********************************************************************
 
 -- Installation --
 $ git clone https://github.com/Lingfeng-Wei/Rings-GR.git
@@ -10,12 +15,12 @@ $ make install
 -- Running --
 /PATH_TO_Rings-GR/src/./rings --input /PATH/Input.txt --output /PATH/Output.txt --time TIME
 
-Input.txt: (with GR)
+Input.txt: (with GR, no tides)
 inf 0 1 0 0 0 0
 m a e i Ω ω 1 1 1 1 0 0 0
 ...
 
-Input.txt: (without GR)
+Input.txt: (without GR, no tides)
 inf 0 1 0 0 0 0
 m a e i Ω ω inf 0 1 0 0 0 0
 ...

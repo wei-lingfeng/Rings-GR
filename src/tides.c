@@ -116,9 +116,9 @@ tidal_rhs(const body *b, const central_body *bc, double brhs[BODY_VECTOR_SIZE], 
   brhs[BODY_a_INDEX] = adot;
 
   //  printf("V is %15.8f\n",V1+V2);
-  // for GR, the value of epsilon_GR=3*n*G*(m_0+m_i)/a*(1-e^2). For M=Msun, we get:
-  epsilon_GR=3.0*n*9.91e-9/(a*(1-e*e));
-    
+  // for GR, the value of epsilon_GR=3*n*G*(m_0+m_i)/(a*(1-e^2)). (See https://doi.org/10.1086/521702 for equations). For M=Msun, we get:
+  epsilon_GR=3.0*n*9.871e-9*(1.0+b->m)/(a*(1-e*e));
+
   for (i = 0; i < 3; i++) {
     brhs[BODY_A_INDEX + i] = e*((Z1 + Z2 + epsilon_GR)*yhat[i] - (Y1 + Y2)*zhat[i] - (V1 + V2)*xhat[i]);
     brhs[BODY_L_INDEX + i] = h*((Y1 + Y2)*xhat[i] - (X1 + X2)*yhat[i] - (W1 + W2)*zhat[i]) - 0.5*(adot/b->a)*b->L[i];

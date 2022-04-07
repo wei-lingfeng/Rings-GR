@@ -8,7 +8,7 @@ So if the parameters for tidal effect is "inf 0 1 0 0 0 0" (no tides), then GR w
 ********************************************************************
 
 -- Installation --
-$ git clone https://github.com/Wei-Lingfeng/Rings-GR.git
+$ git clone https://github.com/wei-lingfeng/Rings-GR.git
 $ cd Rings-GR/
 $ ./configure
 $ make
